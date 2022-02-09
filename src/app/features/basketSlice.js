@@ -1,0 +1,33 @@
+import { createSlice } from '@reduxjs/toolkit';
+
+const initialState = {
+  items: [
+    { id: 1, name: 'Iphone10' },
+    { id: 2, name: 'IpadPro' },
+    { id: 3, name: 'iWatch' },
+  ],
+};
+
+let nextId = 4;
+
+export const basketSlice = createSlice({
+  name: 'basket',
+  initialState,
+
+  reducers: {
+    addItemToBasket: (state, action) => {
+      console.log('in');
+      state.items = [...state.items, { id: nextId, name: action.payload.name }];
+      nextId += 1;
+    },
+    removeItemFromBasket: (state, action) => {
+      state.items = state.items.filter((item) => item.id !== action.payload.id);
+    },
+  },
+});
+
+export const { addItemToBasket, removeItemFromBasket } = basketSlice.actions;
+
+export const selectItems = (state) => state.basket.items;
+
+export default basketSlice.reducer;
